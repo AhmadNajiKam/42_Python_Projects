@@ -5,10 +5,6 @@ class Plant:
         self.name = name
         self.height = height
         self.age = age
-
-class ExtendedPlant(Plant):
-    def __init__(self, name: str, height :int, age: int):
-        super().__init__(name, height, age)
         self.growth = 0
 
     def grow(self) -> None:
@@ -23,7 +19,7 @@ class ExtendedPlant(Plant):
 
 def main() -> None:
     print("=== Day 1 ===")
-    plant = ExtendedPlant("Rose", 25, 30)
+    plant = Plant("Rose", 25, 30)
     plant.get_info()
     i = 1
     while i < 7 :
