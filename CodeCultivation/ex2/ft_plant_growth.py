@@ -14,7 +14,9 @@ class Plant:
         self.age += 1
 
     def get_info(self) -> None:
-        print(f"{self.name}: {self.height + self.growth}cm, {self.age} days old")
+        print(
+            f"{self.name}: {self.height + self.growth}cm,"
+            f"{self.age} days old")
 
 
 def main() -> None:
@@ -22,7 +24,7 @@ def main() -> None:
     plant = Plant("Rose", 25, 30)
     plant.get_info()
     i = 1
-    while i < 7 :
+    while i < 7:
         plant.grow()
         plant.grow_older()
         i += 1
@@ -31,5 +33,5 @@ def main() -> None:
     print(f"Growth this week: +{plant.growth}cm")
 
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     main()
