@@ -25,10 +25,10 @@ class SecurePlant:
             print(f"Age updated: {age} days [OK]")
 
     def get_height(self) -> "SecurePlant":
-        return self.height
+        return self.__height
 
     def get_age(self) -> "SecurePlant":
-        return self.age
+        return self.__age
 
     def print_info(self) -> None:
         print(f"{self.name} ({self.get_height()}cm, {self.get_age()} days)")

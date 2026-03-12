@@ -53,7 +53,7 @@ class Garden:
             self.flowering += 1
         elif plant.type == "prize_flowers":
             self.prize_flowers += 1
-        print(f"Added {plant.name} to {self.owner} garden")
+        print(f"Added {plant.name} to {self.owner}'s garden")
 
     def grow_plant(self, plant_name: str) -> None:
         for plant in self.plants:

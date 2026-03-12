@@ -9,6 +9,7 @@ class Plant:
 
     def grow(self) -> None:
         self.growth += 1
+        self.height += 1
 
     def grow_older(self) -> None:
         self.age += 1
