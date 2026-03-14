@@ -2,7 +2,7 @@
 
 def check_plant_health(plant_name: str,
                        water_level: int, sunlight_hours: int) -> str:
-    if plant_name is None:
+    if plant_name is None or plant_name == "":
         raise Exception("Plant name cannot be empty!")
     if water_level > 10:
         raise Exception(f"Water level {water_level} is too high (max 10)")
