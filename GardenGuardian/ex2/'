@@ -1,0 +1,57 @@
+class GardenError(Exception):
+    pass
+
+
+class PlantError(GardenError):
+    pass
+
+
+class WaterError(GardenError):
+    pass
+
+
+def test_garden_error() -> GardenError:
+    raise GardenError("Garden have dead plants\n")
+
+
+def test_plant_error(plant: str) -> PlantError:
+    raise PlantError(f"The {plant} plant is wilting!\n")
+
+
+def test_water_error() -> WaterError:
+    raise WaterError("Not enough water in the tank!\n")
+
+
+def test_all_errors() -> None:
+    print("=== Custom Garden Errors Demo ===\n")
+
+    print("Testing PlantError...")
+    try:
+        test_plant_error("tomato")
+    except PlantError as error:
+        print("Caught PlantError:", error)
+
+    print("Testing WaterError...")
+    try:
+        test_water_error()
+    except WaterError as error:
+        print("Caught WaterError:", error)
+
+    print("Testing catching all garden errors...")
+    try:
+        test_plant_error("tomato")
+    except GardenError as error:
+        print("")
+
+    try:
+        test_water_error()
+    except GardenError as error:
+        print("")
+
+
+def main() -> None:
+    main()
+
+
+if __name__ == "__main__":
+    main()
