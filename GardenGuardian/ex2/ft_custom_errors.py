@@ -44,11 +44,11 @@ def test_all_errors() -> None:
     try:
         test_plant_error("tomato")
     except GardenError as error:
-        print("Caught PlantError:", error)
+        print("Caught a garden error:", error)
     try:
         test_water_error()
     except GardenError as error:
-        print("Caught WaterError:", error)
+        print("Caught a garden error:", error)
     print()
     print("All custom error types work correctly!")
 

@@ -2,7 +2,7 @@
 
 def check_temperature(temp_str: str) -> None | int:
     try:
-        print("Testing temperature: ")
+        print(f"Testing temperature: {temp_str}")
         temp_int: int = int(temp_str)
         if temp_int > 40:
             raise Exception(
