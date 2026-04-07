@@ -63,7 +63,7 @@ def get_player_pos() -> tuple(float, float, float):
 
 def main() -> None:
     print("Get a first set of coordinates")
-    coordinates_one: tuple(float, float, float) = get_player_pos()
+    coordinates_one: tuple[float, float, float] = get_player_pos()
     print("Got a first tuple:", coordinates_one)
     x1: float = coordinates_one[0]
     y1: float = coordinates_one[1]
