@@ -9,4 +9,3 @@ steps:
       - echo "This is the build step"
       - echo "binary-data-123" > executable
       - timeout 2m bash -c 'while true; do echo "Busy..."; sleep 2; done'
-
