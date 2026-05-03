@@ -5,10 +5,11 @@ import typing
 
 def consume_event(events_list: list[tuple[str, str]]) -> typing.Generator[
         tuple[str, str], None, None]:
-    while len(events_list) != 0:
+    while events_list:
         choice: tuple[str, str]
-        choice = random.choice(events_list)
-        events_list.remove(choice)
+        idx: int = random.randrange(len(events_list))
+        choice = events_list[idx]
+        events_list[idx:idx+1] = []
         yield choice
 
 
@@ -34,7 +35,7 @@ def main() -> None:
     events_list: list[tuple[str, str]] = []
     for element in range(10):
         row = next(generator)
-        events_list.append(row)
+        events_list[len(events_list):] = [row]
     generator = consume_event(events_list)
     for element in range(len(events_list)):
         row = next(generator)
