@@ -16,17 +16,13 @@ def main() -> None:
                                'Treasure Hunter', 'Unstoppable',
                                'First Steps', 'Collector Supreme',
                                'Untouchable', 'Sharp Mind', 'Boss Slayer']
-    player1_set: set[str]
-    player1_set = gen_player_achievements(achievements)
+    player1_set: set[str] = gen_player_achievements(achievements)
     print("Player Alice:", player1_set)
-    player2_set = set[str]
-    player2_set = gen_player_achievements(achievements)
+    player2_set: set[str] = gen_player_achievements(achievements)
     print("Player Bob", player2_set)
-    player3_set = set[str]
-    player3_set = gen_player_achievements(achievements)
+    player3_set: set[str] = gen_player_achievements(achievements)
     print("Player Charlie", player3_set)
-    player4_set = set[str]
-    player4_set = gen_player_achievements(achievements)
+    player4_set: set[str] = gen_player_achievements(achievements)
     print("Player Dylan", player4_set)
     print("\nAll distinct achievements:", achievements)
     common_set: set[str] = player1_set.intersection(

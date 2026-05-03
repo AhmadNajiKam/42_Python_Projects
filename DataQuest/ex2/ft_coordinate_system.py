@@ -7,7 +7,7 @@ def str_to_float(num: str) -> float:
     sign: int = 1
     start_idx: int = 0
     dot_idx: int
-    multiplier: int = 1
+    multiplier: float = 1
     digits_dict: dict[str, int] = {
         '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5,
         '6': 6, '7': 7, '8': 8, '9': 9
@@ -42,7 +42,7 @@ def str_to_float(num: str) -> float:
     return sum * sign
 
 
-def get_player_pos() -> tuple(float, float, float):
+def get_player_pos() -> tuple[float, float, float]:
     while True:
         try:
             coordinates_str: str = input(
@@ -50,7 +50,7 @@ def get_player_pos() -> tuple(float, float, float):
             if ',' not in coordinates_str:
                 raise ValueError("Invalid syntax")
             coordinates_list_str: list[str] = coordinates_str.split(',')
-            coordinates_tup: tuple(float, float, float) = (
+            coordinates_tup: tuple[float, float, float] = (
                 str_to_float(coordinates_list_str[0]),
                 str_to_float(coordinates_list_str[1]),
                 str_to_float(coordinates_list_str[2])
@@ -73,13 +73,13 @@ def main() -> None:
     print("Distance to center:", round(distance, 4))
 
     print("\nGet a second set of coordinates")
-    coordinates_two: tuple(float, float, float) = get_player_pos()
+    coordinates_two: tuple[float, float, float] = get_player_pos()
     print("Got a second tuple:", coordinates_two)
     x2: float = coordinates_two[0]
     y2: float = coordinates_two[1]
     z2: float = coordinates_two[2]
     print(f"It includes: X={x2}, Y={y2}, Z={z2}")
-    distance: float = math.sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
+    distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
     print("Distance between the 2 sets of coordinates:", round(distance, 4))
 
 
