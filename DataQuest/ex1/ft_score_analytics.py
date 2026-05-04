@@ -31,7 +31,7 @@ def main() -> None:
     for arg in sys.argv[1:]:
         try:
             num_to_add: int = atoi(arg)
-            scores_list.append(num_to_add)
+            scores_list[len(scores_list):] += [num_to_add]
         except ValueError:
             print(f"Invalid parameter: {arg}")
     if len(scores_list) == 0:
