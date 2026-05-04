@@ -20,13 +20,16 @@ def main() -> None:
         print(data)
         print("---")
     except FileNotFoundError as error:
-        print(f"Error opening file ’{filename}’:", error)
+        sys.stderr.write(f"[STDERR] Error opening file ’{
+                         filename}’: {error}\n")
     except PermissionError as error:
-        print(f"Error opening file ’{filename}’:", error)
+        sys.stderr.write(f"[STDERR] Error opening file ’{
+                         filename}’: {error}\n")
     except IsADirectoryError as error:
-        print(f"Error opening file ’{filename}’:", error)
+        sys.stderr.write(f"[STDERR] Error opening file ’{
+                         filename}’: {error}\n")
     except OSError as error:
-        print("A system error occurred:", error)
+        sys.stderr.write(f"[STDERR] A system error occurred: {error}")
     finally:
         if file is not None:
             file.close()
@@ -34,9 +37,9 @@ def main() -> None:
         else:
             print(f"File ’{filename}’ was never opened.")
             fail = 1
+
     if fail:
         return
-
     print("Transform data:")
     try:
         new_file: typing.Optional[typing.TextIO] = None
@@ -44,7 +47,9 @@ def main() -> None:
         print("---\n")
         print(data)
         print("---")
-        new_file_name: str = input("Enter new file name (or empty):")
+        sys.stdout.write("Enter new file name (or empty):")
+        sys.stdout.flush()
+        new_file_name: str = sys.stdin.readline().removesuffix("\n")
         if not new_file_name:
             print("Not saving data.")
             return
@@ -53,13 +58,16 @@ def main() -> None:
         print(f"Saving data to ’{new_file_name}’")
         print(f"Data saved in file ’{new_file_name}’.")
     except FileNotFoundError as error:
-        print(f"Error opening file ’{new_file_name}’:", error)
+        sys.stderr.write(f"[STDERR] Error opening file ’{
+                         filename}’: {error}\n")
     except PermissionError as error:
-        print(f"Error opening file ’{new_file_name}’:", error)
+        sys.stderr.write(f"[STDERR] Error opening file ’{
+                         filename}’: {error}\n")
     except IsADirectoryError as error:
-        print(f"Error opening file ’{new_file_name}’:", error)
+        sys.stderr.write(f"[STDERR] Error opening file ’{
+                         filename}’: {error}\n")
     except OSError as error:
-        print("A system error occurred:", error)
+        sys.stderr.write(f"[STDERR] A system error occurred: {error}\n")
     finally:
         if new_file is not None:
             new_file.close()
