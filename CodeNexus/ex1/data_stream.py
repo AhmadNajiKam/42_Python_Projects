@@ -112,72 +112,82 @@ class LogProcessor(DataProcessor):
             self.data.append(str(data))
 
 
+class DataStream:
+    def __init__(self) -> None:
+        self.__processors: list[tuple[DataProcessor, str]] = []
+
+    def register_processor(self, proc: DataProcessor) -> None:
+        name: str = ""
+        if isinstance(proc, DataProcessor):
+            if isinstance(proc, NumericProcessor):
+                name = "Numeric Processor"
+            elif isinstance(proc, TextProcessor):
+                name = "Text Processor"
+            elif isinstance(proc, LogProcessor):
+                name = "Log Processor"
+        self.__processors.append((proc, name))
+
+    def process_stream(self, stream: list[Any]) -> None:
+        got_validated: bool = False
+        for item in stream:
+            got_validated = False
+            for proc in self.__processors:
+                if proc[0].validate(item):
+                    proc[0].ingest(item)
+                    got_validated = True
+            if not got_validated:
+                print("DataStream error - Can't process "
+                      f"element in stream: {item}")
+
+    def print_processors_stats(self) -> None:
+        print("== DataStream statistics ==")
+        if len(self.__processors) == 0:
+            print("No processor found, no data")
+            return
+        for proc in self.__processors:
+            total: int = proc[0].counter + len(proc[0].data)
+            print(f"{proc[1]}: total {
+                total} items processed , remaining {
+                len(proc[0].data)} on processor")
+
+
 def main() -> None:
-    print("=== Code Nexus - Data Processor ===\n")
-    print("Testing Numeric Processor...")
+    print("=== Code Nexus - Data Stream ===\n")
+    print("Initialize Data Stream...")
+    data_stream: list[Any]
+    ds: DataStream = DataStream()
     np: NumericProcessor = NumericProcessor()
-    print("Trying to validate input ’42’:", np.validate(42))
-    print("Trying to validate input ’Hello’:", np.validate("Hello"))
-    try:
-        print("Test invalid ingestion of string ’foo’"
-              "without prior validation:")
-        print(np.ingest("foo"))
-    except Exception as error:
-        print("Got exception:", error)
-    print("Processing data:", [1, 2, 3, 4, 5])
-    np.ingest([1, 2, 3, 4, 5])
-    print("Extracting 3 values...")
-    tup: tuple[int, str] = np.output()
-    print(f"Numeric value {tup[0]}: {tup[1]}")
-    tup = np.output()
-    print(f"Numeric value {tup[0]}: {tup[1]}")
-    tup = np.output()
-    print(f"Numeric value {tup[0]}: {tup[1]}")
+    ds.register_processor(np)
+    print("\nRegistering Numeric Processor\n")
+    data_stream = ["Hello world", [3.14, -1, 2.71],
+                   [{"log_level": "WARNING",
+                     "log_message": "Telnet access!Use ssh instead"},
+                    {"log_level": "INFO",
+                     "log_message": "User wil is connected"}
+                    ], 42, ["Hi", "five"]]
+    print("Send first batch of data on stream:", data_stream)
+    ds.process_stream(data_stream)
+    ds.print_processors_stats()
     print()
 
+    print("Registering other data processors")
     tp: TextProcessor = TextProcessor()
-    print("Testing Text Processor...")
-    print("Trying to validate input ’42’:", tp.validate(42))
-    print("Trying to validate input ’Hello’:", tp.validate("Hello"))
-    try:
-        print("Test invalid ingestion of string ’42’ "
-              "without prior validation:")
-        print(tp.ingest("42"))
-    except Exception as error:
-        print("Got exception:", error)
-    print("Processing data:", ["Hello", "Nexus", "World"])
-    tp.ingest(["Hello", "Nexus", "World"])
-    print("Extracting 1 value...")
-    tup = tp.output()
-    print(f"Numeric value {tup[0]}: {tup[1]}")
-    print()
-
     lp: LogProcessor = LogProcessor()
-    print("Testing Log Processor...")
-    print("Trying to validate input ’Hello’:", lp.validate("Hello"))
-
-    test_dict: dict[str, str] = dict(
-        {"log_level": "NOTICE", "log_message": "Connection to server"}
-    )
-    print(f"Trying to validate input ’{test_dict}’:", lp.validate(test_dict))
-    try:
-        print("Test invalid ingestion of string ’42’ "
-              "without prior validation:")
-        print(lp.ingest("42"))
-    except Exception as error:
-        print("Got exception:", error)
-    test_dict_lst: list[dict[str, str]] = [
-        {"log_level": "NOTICE", "log_message":
-         "Connection to server"}, {"log_level": "ERROR", "log_message":
-                                   "Unauthorized access!!"}]
-    print("Processing data:", test_dict_lst)
-    lp.ingest(test_dict_lst)
-    print("Extracting 2 values...")
-    tup = lp.output()
-    print(f"Numeric value {tup[0]}: {tup[1]}")
-    tup = lp.output()
-    print(f"Numeric value {tup[0]}: {tup[1]}")
+    print("Send the same batch again")
+    ds.register_processor(tp)
+    ds.register_processor(lp)
+    ds.process_stream(data_stream)
+    ds.print_processors_stats()
     print()
+    print("Consume some elements from the data processors:"
+          "Numeric 3, Text 2, Log 1")
+    np.output()
+    np.output()
+    np.output()
+    tp.output()
+    tp.output()
+    lp.output()
+    ds.print_processors_stats()
 
 
 if __name__ == "__main__":
