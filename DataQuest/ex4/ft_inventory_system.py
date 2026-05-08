@@ -35,6 +35,8 @@ def create_dictionary(argc: int, argv: list[str]) -> dict[str, int]:
             print(f"Redundant item ’{components[0]}’ - discarding")
             continue
         try:
+            if atoi(components[1]) < 0:
+                raise Exception("Quantity is less than 0")
             inventory[components[0]] = atoi(components[1])
         except Exception as error:
             print(f"Quantity error for ’{components[0]}’: {error}")
@@ -51,29 +53,41 @@ def main() -> None:
     length: int = len(sys.argv)
     inventory = create_dictionary(length, sys.argv)
     dict_sum: int = sum(inventory.values())
+    size: int = len(inventory.values())
 
     print("Got inventory:", inventory)
     print("Item list:", list(inventory.keys()))
-    print(f"Total quantity of the {length - 1} items:", dict_sum)
+    print(f"Total quantity of the {size} items:", dict_sum)
 
-    for element in inventory:
-        print(f"Item {element} represents {round(
-            (inventory[element]/dict_sum) * 100, 1)}%")
-
-    max_val: int = list(inventory.values())[0]
-    min_val: int = list(inventory.values())[0]
+    try:
+        for element in inventory:
+            print(f"Item {element} represents {round(
+                (inventory[element]/dict_sum) * 100, 1)}%")
+    except ZeroDivisionError:
+        print(f"Item {element} represents 0%")
+    max_val: int | None
+    if size != 0:
+        max_val = list(inventory.values())[0]
+        min_val = list(inventory.values())[0]
+    else:
+        max_val = None
+        min_val = None
     max_key: str
     min_key: str
 
-    for key in inventory:
-        if inventory[key] <= min_val:
-            min_val = inventory[key]
-            min_key = key
-        if inventory[key] >= max_val:
-            max_val = inventory[key]
-            max_key = key
-    print(f"Item most abundant: {max_key} with quantity {max_val}")
-    print(f"Item least abundant: {min_key} with quantity {min_val}")
+    if size != 0:
+        for key in inventory:
+            if inventory[key] <= min_val:
+                min_val = inventory[key]
+                min_key = key
+            if inventory[key] >= max_val:
+                max_val = inventory[key]
+                max_key = key
+        print(f"Item most abundant: {max_key} with quantity {max_val}")
+        print(f"Item least abundant: {min_key} with quantity {min_val}")
+    else:
+        print(f"Item most abundant: {max_val}")
+        print(f"Item least abundant: {min_val}")
     inventory["magic_item"] = 1
     print("Updated inventory:", inventory)
 
