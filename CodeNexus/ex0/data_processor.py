@@ -107,9 +107,9 @@ class LogProcessor(DataProcessor):
             raise Exception("Improper dictionary value")
         if isinstance(data, list):
             for item in data:
-                self.data.append(str(item))
+                self.data.append(f"{item['log_level']}: {item['log_message']}")
         else:
-            self.data.append(str(data))
+            self.data.append(f"{data['log_level']}: {data['log_message']}")
 
 
 def main() -> None:
