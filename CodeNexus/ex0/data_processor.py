@@ -27,7 +27,7 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
-        if isinstance(data, (int, float)):
+        if isinstance(data, (int, float)) and not isinstance(data, bool):
             return True
 
         def check_num(data: str) -> bool:
@@ -43,8 +43,9 @@ class NumericProcessor(DataProcessor):
         if isinstance(data, list):
             if not data:
                 return True
-            return all(isinstance(x, (int, float)) or (
-                isinstance(x, str) and check_num(x)) for x in data)
+            return all((isinstance(x, (int, float)) or (
+                isinstance(x, str) and check_num(
+                    x))) and not isinstance(x, bool) for x in data)
         return False
 
     def ingest(self, data: int | float | list[float | int]) -> None:
@@ -121,7 +122,7 @@ def main() -> None:
     try:
         print("Test invalid ingestion of string ’foo’"
               "without prior validation:")
-        print(np.ingest("foo"))
+        np.ingest("foo")
     except Exception as error:
         print("Got exception:", error)
     print("Processing data:", [1, 2, 3, 4, 5])
@@ -141,8 +142,8 @@ def main() -> None:
     print("Trying to validate input ’Hello’:", tp.validate("Hello"))
     try:
         print("Test invalid ingestion of string ’42’ "
-              "without prior validation:")
-        print(tp.ingest("42"))
+              "without prior validation: ")
+        tp.ingest("42")
     except Exception as error:
         print("Got exception:", error)
     print("Processing data:", ["Hello", "Nexus", "World"])
@@ -163,7 +164,7 @@ def main() -> None:
     try:
         print("Test invalid ingestion of string ’42’ "
               "without prior validation:")
-        print(lp.ingest("42"))
+        lp.ingest("42")
     except Exception as error:
         print("Got exception:", error)
     test_dict_lst: list[dict[str, str]] = [

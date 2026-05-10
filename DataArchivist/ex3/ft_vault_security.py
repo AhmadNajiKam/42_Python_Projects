@@ -11,9 +11,10 @@ def secure_archive(file_name: str, operation: str,
             elif operation == "w":
                 file.write(content)
                 return (True, content)
-    except Exception as error:
+    except OSError as error:
         return (False,
                 f"[Errno {error.errno}] {error.strerror}: '{error.filename}'")
+    return (True, "")
 
 
 def main() -> None:

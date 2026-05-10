@@ -70,8 +70,8 @@ def main() -> None:
         max_val = list(inventory.values())[0]
         min_val = list(inventory.values())[0]
     else:
-        max_val = None
-        min_val = None
+        max_val = 0
+        min_val = 0
     max_key: str
     min_key: str
 
