@@ -24,4 +24,4 @@ else:
     print("\nSUCCESS: You’re in an isolated environment!\n"
           "Safe to install packages without affecting\n"
           "the global system.\n")
-    print("Package installation path:", site.getsitepackages()[0])
+    print("Package installation path:", site.getsitepackages()[1])
