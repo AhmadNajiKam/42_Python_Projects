@@ -2,28 +2,6 @@
 import sys
 
 
-def atoi(num: str) -> int:
-    sign: int = 1
-    sum: int = 0
-    start_idx: int = 0
-    multiplier: int = 1
-    i: int = len(num) - 1
-    map_nums: dict[str, int] = {
-        '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5,
-        '6': 6, '7': 7, '8': 8, '9': 9
-    }
-    if num and num[0] == '-':
-        sign *= -1
-        start_idx += 1
-    while i >= start_idx:
-        if num[i] not in map_nums:
-            raise ValueError("Invalid number")
-        sum += multiplier * map_nums[num[i]]
-        multiplier *= 10
-        i -= 1
-    return sum * sign
-
-
 def create_dictionary(argc: int, argv: list[str]) -> dict[str, int]:
     inventory: dict[str, int] = {}
     for element in argv[1:]:
@@ -35,9 +13,9 @@ def create_dictionary(argc: int, argv: list[str]) -> dict[str, int]:
             print(f"Redundant item ’{components[0]}’ - discarding")
             continue
         try:
-            if atoi(components[1]) < 0:
+            if int(components[1]) < 0:
                 raise Exception("Quantity is less than 0")
-            inventory[components[0]] = atoi(components[1])
+            inventory[components[0]] = int(components[1])
         except Exception as error:
             print(f"Quantity error for ’{components[0]}’: {error}")
     return inventory

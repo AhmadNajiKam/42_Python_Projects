@@ -2,44 +2,11 @@
 import math
 
 
-def str_to_float(num: str) -> float:
-    sum: float = 0
-    sign: int = 1
-    start_idx: int = 0
-    dot_idx: int
-    multiplier: float = 1
-    digits_dict: dict[str, int] = {
-        '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5,
-        '6': 6, '7': 7, '8': 8, '9': 9
-    }
-    if num and num[0] == '-':
-        sign *= -1
-        start_idx += 1
-    dot_idx = num.find('.')
-    i: int
-    if dot_idx == -1:
-        i = len(num) - 1
-    else:
-        i = dot_idx - 1
-
-    while i >= start_idx:
-        if num[i] not in digits_dict:
-            raise ValueError(f"Error on parameter ’{num}’:"
-                             f" could not convert string to float: ’{num}’")
-        sum += multiplier * digits_dict[num[i]]
-        multiplier *= 10
-        i -= 1
-    if dot_idx != -1:
-        multiplier = 0.1
-        i = dot_idx + 1
-        while i < len(num):
-            if num[i] not in digits_dict:
-                raise ValueError(f"Error on parameter ’{num}’: "
-                                 f"could not convert string to float: ’{num}’")
-            sum += digits_dict[num[i]] * multiplier
-            i += 1
-            multiplier *= 0.1
-    return sum * sign
+def list_size(input: list[str]) -> int:
+    i: int = 0
+    for item in input:
+        i += 1
+    return i
 
 
 def get_player_pos() -> tuple[float, float, float]:
@@ -48,14 +15,16 @@ def get_player_pos() -> tuple[float, float, float]:
             coordinates_str: str = input(
                 "Enter new coordinates as floats in format ’x,y,z’: ")
             if ',' not in coordinates_str:
-                raise ValueError("Invalid syntax")
+                raise ValueError("Invalid structure")
             coordinates_list_str: list[str] = coordinates_str.split(',')
+            if list_size(coordinates_list_str) != 3:
+                raise Exception("Invalid input detected")
             coordinates_tup: tuple[float, float, float] = (
-                str_to_float(coordinates_list_str[0]),
-                str_to_float(coordinates_list_str[1]),
-                str_to_float(coordinates_list_str[2])
+                float(coordinates_list_str[0]),
+                float(coordinates_list_str[1]),
+                float(coordinates_list_str[2])
             )
-        except ValueError as error:
+        except Exception as error:
             print(error)
         else:
             return coordinates_tup
