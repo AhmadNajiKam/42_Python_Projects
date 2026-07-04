@@ -37,7 +37,7 @@ def partial_enchanter(base_enchantment: Callable[[int, str, str], str]
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache()
 def memoized_fibonacci(n: int) -> int:
     if n < 2:
         return n
