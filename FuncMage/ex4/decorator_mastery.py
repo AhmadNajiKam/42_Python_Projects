@@ -66,7 +66,7 @@ def main() -> None:
     @spell_timer
     def fireball() -> str:
         time.sleep(1.114)
-        return "Fireball cast!"
+        return "Result:  Fireball cast!"
     print(fireball())
     print("\nTesting retrying spell...")
 

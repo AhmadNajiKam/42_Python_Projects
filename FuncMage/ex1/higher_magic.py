@@ -14,6 +14,7 @@ def spell_combiner(spell1: Callable[[str, int], str],
                    spell2: Callable[[str, int], str]
                    ) -> Callable[[str, int], tuple[str, str]]:
     if not callable(spell1) or not callable(spell2):
+
         raise TypeError(f"Expected a callable spell, got {
                         type(spell1)} and {type(spell2)}")
     return lambda target, power: (spell1(target, power), spell2(target, power))
@@ -39,8 +40,7 @@ def conditional_caster(condition: Callable[[str, int], bool],
 
 def spell_sequence(spells: list[Callable[[str, int], str]]
                    ) -> Callable[[str, int], list[str]]:
-    validated_spells = tuple(s for s in spells if callable(s))
-    if len(validated_spells) != len(spells):
+    if not all(callable(s) for s in spells):
         raise TypeError(
             "Expected all items in the sequence to be callable spells")
     return lambda target, power: [spell(target, power) for spell in spells]
@@ -50,8 +50,9 @@ def main() -> None:
     print("Testing spell combiner...")
     combined_heal_fire: Callable[[str, int], tuple[str, str]
                                  ] = spell_combiner(heal, fire)
-    print(combined_heal_fire("Margit", 40)[0] +
-          ", " + combined_heal_fire("Margit", 40)[1])
+    heal_res, fire_res = combined_heal_fire("Margit", 40)
+    print(heal_res +
+          ", " + fire_res)
     amplified_fire: Callable[[str, int], str] = power_amplifier(fire, 5)
     print("\nTesting power amplifier...")
     print("Original:", fire("Morgott", 10))

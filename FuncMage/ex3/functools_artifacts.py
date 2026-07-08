@@ -22,7 +22,7 @@ def spell_reducer(spells: list[int], operation: str) -> int:
     elif operation == "min":
         return reduce(min, spells)
     else:
-        raise Exception("Operation is unknown")
+        raise ValueError("Operation is unknown")
 
 
 def partial_enchanter(base_enchantment: Callable[[int, str, str], str]
@@ -33,7 +33,7 @@ def partial_enchanter(base_enchantment: Callable[[int, str, str], str]
     return {
         "version_one": partial(base_enchantment, 50, "Flaming"),
         "version_two": partial(base_enchantment, 50, "Freezing"),
-        "version_three": partial(base_enchantment, 50, "Posioning")
+        "version_three": partial(base_enchantment, 50, "Poisoning")
     }
 
 
