@@ -1,0 +1,105 @@
+site_name: 42 Python Projects
+site_description: Documentation for Ahmad Naji's 42 school Python curriculum projects
+site_author: Ahmad Naji
+site_url: https://ahmadnajiKam.github.io/42_Python_Projects/
+repo_url: https://github.com/AhmadNajiKam/42_Python_Projects
+repo_name: AhmadNajiKam/42_Python_Projects
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/snake
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Tutorials:
+    - tutorials/index.md
+    - Writing Your First Decorator: tutorials/first-decorator.md
+    - Pydantic Data Modelling: tutorials/pydantic-models.md
+  - How-To Guides:
+    - how-to/index.md
+    - How to Submit a 42 Exercise: how-to/submit-exercise.md
+    - How to Run Tests Locally: how-to/run-tests.md
+    - How to Debug with Python's Traceback: how-to/debug-traceback.md
+  - Reference:
+    - reference/index.md
+    - Project Catalogue: reference/projects.md
+    - Python Concepts Cheatsheet: reference/concepts.md
+    - 42 Norminette & Style Rules: reference/style-rules.md
+  - Projects:
+    - projects/index.md
+    - FuncMage: projects/funcmage.md
+    - CosmicData: projects/cosmicdata.md
+    - DataArchivist: projects/dataarchvist.md
+    - TheMatrix: projects/thematrix.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/AhmadNajiKam
+  generator: false
+
+copyright: Copyright &copy; 2025 Ahmad Naji — 42 School Jordan
